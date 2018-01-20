@@ -1,4 +1,8 @@
 class Rectangle {
+    constructor() {
+        this.name = "Rectangle";
+    }
+
     update() {
         if (mouseIsPressed) {
             temp_canvas.clear();
@@ -11,6 +15,10 @@ class Rectangle {
 }
 
 class Line {
+    constructor() {
+        this.name = "Line";
+    }
+
     update() {
         if (mouseIsPressed) {
             temp_canvas.clear();
@@ -22,10 +30,9 @@ class Line {
     }
 }
 
-var r;
-var g;
-var b;
+var r, g, b;
 var thickness = 5;
+var currentToolP;
 
 var currentTool = 0;
 
@@ -40,6 +47,7 @@ var mouseDownX, mouseDownY; //the mouse position when we pressed the mouse
 function keyPressed() {
     if (keyCode == TAB) {
         currentTool = (currentTool + 1) % tools.length;
+        currentToolP.elt.textContent = tools[currentTool].name;
     }
 }
 
@@ -52,7 +60,7 @@ function mouseReleased() {
     main_canvas.image(temp_canvas, 0, 0); //we apply the object which has been drawn with the current tool to the actual drawing
 }
 
-function setupSliders() {
+function setupControls() {
     r = createSlider(0, 255, 0, 1);
     r.position(10, 10);
 
@@ -63,21 +71,25 @@ function setupSliders() {
     b.position(10, 90);
 
     //thickness = createSlider(1, 20, 1, 0);
+
+    currentToolP = createP(tools[currentTool].name);
+    currentToolP.position(10, 130);
 }
 
 function setup() {
-    setupSliders();
+    setupControls();
 
-    createCanvas(window.innerWidth, window.innerHeight);
+    var c = createCanvas(0.9 * windowWidth, 0.95 * windowHeight);
+    c.position(0.085 * windowWidth, 20);
 
     main_canvas = createGraphics(width, height); //contains the actual drawing
     temp_canvas = createGraphics(width, height); //contains the temporary object being drawn by the current tool
 
-    background(255);
+    temp_canvas.noFill();
 }
 
 function draw() {
-    clear();
+    background(255);
     image(main_canvas, 0, 0);
     tools[currentTool].update();
 }
