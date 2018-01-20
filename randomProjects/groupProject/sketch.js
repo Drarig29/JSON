@@ -79,11 +79,13 @@ function setupControls() {
 function setup() {
     setupControls();
 
-    var c = createCanvas(0.9 * windowWidth, 0.95 * windowHeight);
+    var w = 0.9 * windowWidth, h = 0.95 * windowHeight;
+
+    var c = createCanvas(w, h);
     c.position(0.085 * windowWidth, 20);
 
-    main_canvas = createGraphics(width, height); //contains the actual drawing
-    temp_canvas = createGraphics(width, height); //contains the temporary object being drawn by the current tool
+    main_canvas = createGraphics(w, h); //contains the actual drawing
+    temp_canvas = createGraphics(w, h); //contains the temporary object being drawn by the current tool
 
     temp_canvas.noFill();
 }
